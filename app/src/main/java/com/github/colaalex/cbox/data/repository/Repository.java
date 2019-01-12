@@ -32,7 +32,7 @@ public class Repository implements IPostRepository {
         postApi.getPost(postId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(callback::onSuccess);
+                .subscribe(callback::onSuccess, callback::onError);
     }
 
 }
