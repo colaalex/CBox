@@ -1,6 +1,4 @@
-package com.github.colaalex.cbox.presentation;
-
-import android.util.Log;
+package com.github.colaalex.cbox.presentation.main;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -15,7 +13,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     private static final int PAGE_SIZE = 5;
 
-    private PostInteractor postInteractor;
+    private PostInteractor interactor;
 
     private boolean isLoading;
     private int requested;
@@ -23,24 +21,24 @@ public class MainPresenter extends MvpPresenter<MainView> {
     private int pageNumber;
 
     @Inject
-    public MainPresenter(PostInteractor postInteractor) {
-        this.postInteractor = postInteractor;
+    MainPresenter(PostInteractor postInteractor) {
+        this.interactor = postInteractor;
         isLoading = false;
         requested = 0;
         pageNumber = 0;
     }
 
-    public void loadPosts() {
+    void loadPosts() {
         if (pageNumber * PAGE_SIZE >= 100)
             return;
         isLoading = true;
         getViewState().showProgressBar(isLoading);
         for (int i = PAGE_SIZE * pageNumber + 1; i < PAGE_SIZE * pageNumber + 6; i++) {
             requested++;
-            postInteractor.getPost(i, new ApiCallback() {
+            interactor.getPost(i, new ApiCallback() {
                 @Override
-                public void onSuccess(Post post) {
-                    getViewState().addPost(post);
+                public void onSuccess(Object result) {
+                    getViewState().addPost((Post) result);
                     if (--requested == 0) {
                         stopLoading();
                     }
@@ -66,5 +64,9 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     public boolean isLoading() {
         return isLoading;
+    }
+
+    void showPost(int pos) {
+        getViewState().showPost(pos);
     }
 }

@@ -6,4 +6,6 @@ public interface IPostRepository {
 
     void getPost(int postId, ApiCallback callback);
 
+    void getComments(int postId, ApiCallback callback);
+
 }
