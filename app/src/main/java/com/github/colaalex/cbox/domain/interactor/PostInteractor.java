@@ -10,11 +10,11 @@ public class PostInteractor {
     private IPostRepository postRepository;
 
     @Inject
-    public PostInteractor(IPostRepository postRepository) {
+    PostInteractor(IPostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
-    public void getPost(int postId, ApiCallback callback) {
-        postRepository.getPost(postId, callback);
+    public void getPosts(ApiCallback callback) {
+        postRepository.getPost(callback);
     }
 }

@@ -15,6 +15,9 @@ public interface PostApi {
     @GET("/posts/{id}")
     Single<Post> getPost(@Path("id") int postId);
 
+    @GET("/posts")
+    Single<List<Post>> getPosts();
+
     @GET("/comments")
     Single<List<Comment>> getComments(@Query("postId") int postId);
 

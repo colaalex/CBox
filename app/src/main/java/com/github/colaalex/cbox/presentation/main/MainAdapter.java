@@ -76,6 +76,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    void addPosts(List<Post> posts) {
+        data.addAll(posts);
+        notifyDataSetChanged();
+    }
+
     int getPostId(int pos) {
         return data.get(pos).getPostId();
     }

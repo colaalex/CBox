@@ -18,6 +18,8 @@ import com.github.colaalex.cbox.domain.entity.Post;
 import com.github.colaalex.cbox.presentation.RecyclerViewClickListener;
 import com.github.colaalex.cbox.presentation.post.PostActivity;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -81,31 +83,16 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         startActivity(intent);
     }
 
+    @Override
+    public void addPosts(List<Post> posts) {
+        adapter.addPosts(posts);
+    }
+
     private void createRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerViewClickListener listener = (view, position) -> presenter.showPost(position);
         adapter = new MainAdapter(listener);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if (!presenter.isLoading()) {
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount)
-                        presenter.loadPosts();
-                }
-            }
-        });
     }
 }
