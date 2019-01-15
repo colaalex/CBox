@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CBox</string>
+    <string name="new_post">New post</string>
 </resources>

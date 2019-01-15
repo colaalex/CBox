@@ -16,7 +16,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
     private List<Post> data;
     private RecyclerViewClickListener mListener;
@@ -29,15 +32,33 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_post, viewGroup, false);
-        return new ViewHolder(view, mListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        if (i == TYPE_HEADER) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_header_main, viewGroup, false);
+            return new HeaderViewHolder(view);
+        }
+        else if (i == TYPE_ITEM) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_post, viewGroup, false);
+            return new ItemViewHolder(view, mListener);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tvBody.setText(data.get(i).getBody());
-        viewHolder.tvTitle.setText(data.get(i).getTitle());
+    public int getItemViewType(int position) {
+        if (position == TYPE_HEADER)
+            return TYPE_HEADER;
+        return TYPE_ITEM;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        if (viewHolder instanceof ItemViewHolder) {
+            ((ItemViewHolder) viewHolder).tvBody.setText(data.get(i).getBody());
+            ((ItemViewHolder) viewHolder).tvTitle.setText(data.get(i).getTitle());
+        } else if (viewHolder instanceof HeaderViewHolder) {
+
+        }
     }
 
     @Override
@@ -59,14 +80,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return data.get(pos).getPostId();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private RecyclerViewClickListener mListener;
 
         TextView tvTitle;
         TextView tvBody;
 
-        ViewHolder(View view, RecyclerViewClickListener listener) {
+        ItemViewHolder(View view, RecyclerViewClickListener listener) {
             super(view);
             mListener = listener;
             tvTitle = view.findViewById(R.id.tvMainTitle);
@@ -77,6 +98,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
             mListener.onClick(view, getAdapterPosition());
+        }
+    }
+
+    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+        HeaderViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
     }
 }
