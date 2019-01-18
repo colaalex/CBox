@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CBox</string>
     <string name="new_post">New post</string>
+    <string name="send">Send</string>
+    <string name="input_text">Input Text</string>
+    <string name="input_title">Input Title</string>
 </resources>

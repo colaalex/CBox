@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.post.PostActivity" />
+        <activity android:name=".presentation.create.CreateActivity" />
 
     </application>
 </manifest>

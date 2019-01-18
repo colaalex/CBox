@@ -8,4 +8,6 @@ public interface IPostRepository {
 
     void getComments(int postId, ApiCallback callback);
 
+    void sendPost(String title, String text, ApiCallback callback);
+
 }

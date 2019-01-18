@@ -15,39 +15,32 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     private PostInteractor interactor;
 
-    private boolean isLoading;
-
     @Inject
     MainPresenter(PostInteractor postInteractor) {
         this.interactor = postInteractor;
-        isLoading = false;
     }
 
     void loadPosts() {
-        isLoading = true;
-        getViewState().showProgressBar(isLoading);
+        getViewState().showProgressBar(true);
         interactor.getPosts(new ApiCallback() {
             @Override
             public void onSuccess(Object result) {
                 if (result instanceof List) {
                     getViewState().addPosts((List<Post>) result);
                 }
+                getViewState().showProgressBar(false);
             }
 
             @Override
             public void onError(Throwable t) {
-                getViewState().showError("Error loading posts");
+                getViewState().showMessage("Error loading posts");
+                getViewState().showProgressBar(false);
             }
         });
     }
 
-    private void stopLoading() {
-        isLoading = false;
-        getViewState().showProgressBar(isLoading);
-    }
-
-    public boolean isLoading() {
-        return isLoading;
+    void createPost() {
+        getViewState().createPost();
     }
 
     void showPost(int pos) {

@@ -2,7 +2,9 @@ package com.github.colaalex.cbox.domain.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Post {
+import java.io.Serializable;
+
+public class Post implements Serializable {
 
     @SerializedName("userId")
     private int userId;

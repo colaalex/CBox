@@ -2,7 +2,7 @@ package com.github.colaalex.cbox.presentation.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +16,7 @@ import com.github.colaalex.cbox.App;
 import com.github.colaalex.cbox.R;
 import com.github.colaalex.cbox.domain.entity.Post;
 import com.github.colaalex.cbox.presentation.RecyclerViewClickListener;
+import com.github.colaalex.cbox.presentation.create.CreateActivity;
 import com.github.colaalex.cbox.presentation.post.PostActivity;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
-    public void showError(String msg) {
+    public void showMessage(String msg) {
         Snackbar.make(recyclerView, msg, Snackbar.LENGTH_SHORT).show();
     }
 
@@ -88,9 +89,34 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         adapter.addPosts(posts);
     }
 
+    @Override
+    public void createPost() {
+        Intent intent = new Intent(this, CreateActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //if (data == null) return;
+        if (resultCode == RESULT_OK) {
+            Post post = (Post) getIntent().getSerializableExtra("Post");
+            if (post != null) {
+                addPost(post);
+            }
+            showMessage("New post created");
+        } else if (resultCode == 2)
+            showMessage("Couldn't create post");
+    }
+
     private void createRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerViewClickListener listener = (view, position) -> presenter.showPost(position);
+        RecyclerViewClickListener listener = (view, position) -> {
+            if (position == 0) {
+                presenter.createPost();
+            }
+            else
+                presenter.showPost(position);
+        };
         adapter = new MainAdapter(listener);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

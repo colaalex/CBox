@@ -6,7 +6,6 @@ import com.github.colaalex.cbox.domain.repository.IPostRepository;
 
 import javax.inject.Inject;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -36,4 +35,11 @@ public class Repository implements IPostRepository {
                 .subscribe(callback::onSuccess, callback::onError);
     }
 
+    @Override
+    public void sendPost(String title, String text, ApiCallback callback) {
+        postApi.sendPost(title, text, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(callback::onSuccess, callback::onError);
+    }
 }
