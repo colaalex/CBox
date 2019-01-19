@@ -78,9 +78,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
-    public void showPost(int pos) {
+    public void showPost(Post post) {
         Intent intent = new Intent(getApplicationContext(), PostActivity.class);
-        intent.putExtra("POST_ID", adapter.getPostId(pos));
+        intent.putExtra("POST", post);
         startActivity(intent);
     }
 
@@ -97,7 +97,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //if (data == null) return;
         if (resultCode == RESULT_OK) {
             Post post = (Post) getIntent().getSerializableExtra("Post");
             if (post != null) {
@@ -110,12 +109,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     private void createRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerViewClickListener listener = (view, position) -> {
+        RecyclerViewClickListener listener = (view, position, post) -> {
             if (position == 0) {
                 presenter.createPost();
             }
             else
-                presenter.showPost(position);
+                presenter.showPost(post);
         };
         adapter = new MainAdapter(listener);
         recyclerView.setLayoutManager(layoutManager);

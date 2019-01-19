@@ -43,7 +43,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
         getViewState().createPost();
     }
 
-    void showPost(int pos) {
-        getViewState().showPost(pos);
+    void showPost(Post post) {
+        getViewState().showPost(post);
     }
 }

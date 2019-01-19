@@ -13,6 +13,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.github.colaalex.cbox.App;
 import com.github.colaalex.cbox.R;
 import com.github.colaalex.cbox.domain.entity.Comment;
+import com.github.colaalex.cbox.domain.entity.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,9 @@ public class PostActivity extends MvpAppCompatActivity implements PostView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        int postId = getIntent().getIntExtra("POST_ID", 0);
-        adapter = new PostAdapter(new ArrayList<>());
+        Post post = (Post) getIntent().getSerializableExtra("POST");
+        int postId = post.getPostId();
+        adapter = new PostAdapter(new ArrayList<>(), post);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         presenter.getComments(postId);

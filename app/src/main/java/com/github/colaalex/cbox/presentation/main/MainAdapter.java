@@ -55,16 +55,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         if (viewHolder instanceof ItemViewHolder) {
-            ((ItemViewHolder) viewHolder).tvBody.setText(data.get(i).getBody());
-            ((ItemViewHolder) viewHolder).tvTitle.setText(data.get(i).getTitle());
-        } //else if (viewHolder instanceof HeaderViewHolder) {
-//
-//        }
+            ((ItemViewHolder) viewHolder).tvBody.setText(data.get(i-1).getBody());
+            ((ItemViewHolder) viewHolder).tvTitle.setText(data.get(i-1).getTitle());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size() + 1;
     }
 
     void addPost(Post post) {
@@ -103,7 +101,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition());
+            mListener.onClick(view, getAdapterPosition(), data.get(getAdapterPosition()));
         }
     }
 
@@ -121,7 +119,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition());
+            mListener.onClick(view, getAdapterPosition(), null);
         }
     }
 }

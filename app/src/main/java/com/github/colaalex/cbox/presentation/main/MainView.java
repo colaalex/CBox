@@ -10,7 +10,7 @@ public interface MainView extends MvpView {
     void addPost(Post post);
     void showProgressBar(boolean isLoading);
     void showMessage(String msg);
-    void showPost(int pos);
+    void showPost(Post post);
     void addPosts(List<Post> posts);
     void createPost();
 }

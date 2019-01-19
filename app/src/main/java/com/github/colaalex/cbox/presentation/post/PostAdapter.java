@@ -9,38 +9,62 @@ import android.widget.TextView;
 
 import com.github.colaalex.cbox.R;
 import com.github.colaalex.cbox.domain.entity.Comment;
+import com.github.colaalex.cbox.domain.entity.Post;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
     private List<Comment> data;
+    private Post post;
 
-    PostAdapter(List<Comment> comments) {
+    PostAdapter(List<Comment> comments, Post post) {
         this.data = comments;
+        this.post = post;
     }
 
     @NonNull
     @Override
-    public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_comment, viewGroup, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        if (i == TYPE_HEADER) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_post, viewGroup, false);
+            return new HeaderViewHolder(view);
+        } else if (i == TYPE_ITEM) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_comment, viewGroup, false);
+            return new ViewHolder(view);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.tvBody.setText(data.get(i).getBody());
-        viewHolder.tvEmail.setText(data.get(i).getEmail());
-        viewHolder.tvName.setText(data.get(i).getName());
+    public int getItemViewType(int position) {
+        if (position == TYPE_HEADER)
+            return TYPE_HEADER;
+        return TYPE_ITEM;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        if (viewHolder instanceof HeaderViewHolder) {
+            ((HeaderViewHolder) viewHolder).tvBody.setText(post.getBody());
+            ((HeaderViewHolder) viewHolder).tvTitle.setText(post.getTitle());
+        } else if (viewHolder instanceof ViewHolder) {
+            ((ViewHolder) viewHolder).tvBody.setText(data.get(i-1).getBody());
+            ((ViewHolder) viewHolder).tvEmail.setText(data.get(i-1).getEmail());
+            ((ViewHolder) viewHolder).tvName.setText(data.get(i-1).getName());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size() + 1;
     }
 
     void loadComments(List<Comment> comments) {
-        this.data = comments;
+        this.data.addAll(comments);
         notifyDataSetChanged();
     }
 
@@ -55,6 +79,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvName = itemView.findViewById(R.id.tvPostName);
             tvEmail = itemView.findViewById(R.id.tvPostEmail);
             tvBody = itemView.findViewById(R.id.tvPostBody);
+        }
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvTitle;
+        TextView tvBody;
+
+        HeaderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvTitle = itemView.findViewById(R.id.tvMainTitle);
+            tvBody = itemView.findViewById(R.id.tvMainBody);
         }
     }
 }
