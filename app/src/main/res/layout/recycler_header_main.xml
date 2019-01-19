@@ -9,6 +9,7 @@
         android:id="@+id/btnNewPost"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="@string/new_post"
-        android:drawableStart="@drawable/ic_create_black_24dp"/>
+        android:drawableStart="@drawable/ic_create_black_24dp"
+        android:textColor="@color/colorText"/>
 
 </LinearLayout>

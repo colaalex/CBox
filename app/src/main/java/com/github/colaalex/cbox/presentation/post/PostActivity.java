@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -31,10 +32,14 @@ public class PostActivity extends MvpAppCompatActivity implements PostView {
 
     @Inject
     Provider<PostPresenter> presenterProvider;
+
     @BindView(R.id.rvPosts)
     RecyclerView recyclerView;
     @BindView(R.id.pbLoading)
     ProgressBar progressBar;
+    @BindView(R.id.tbMain)
+    Toolbar toolbar;
+
     private PostAdapter adapter;
 
     @ProvidePresenter
@@ -48,6 +53,11 @@ public class PostActivity extends MvpAppCompatActivity implements PostView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         Post post = (Post) getIntent().getSerializableExtra("POST");
         int postId = post.getPostId();
         adapter = new PostAdapter(new ArrayList<>(), post);
@@ -72,6 +82,12 @@ public class PostActivity extends MvpAppCompatActivity implements PostView {
     @Override
     public void showError(String msg) {
         Snackbar.make(recyclerView, msg, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 
 }
