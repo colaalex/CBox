@@ -101,7 +101,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition(), data.get(getAdapterPosition()));
+            mListener.onClick(view, getAdapterPosition(), data.get(getAdapterPosition() - 1));
         }
     }
 

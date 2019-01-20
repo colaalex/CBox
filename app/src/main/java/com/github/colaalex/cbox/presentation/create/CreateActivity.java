@@ -79,9 +79,9 @@ public class CreateActivity extends MvpAppCompatActivity implements CreateView {
 
     @Override
     public void postAdded(Post post) {
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         intent.putExtra("Post", post);
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

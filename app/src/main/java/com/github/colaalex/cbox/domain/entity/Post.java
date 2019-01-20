@@ -6,6 +6,12 @@ import java.io.Serializable;
 
 public class Post implements Serializable {
 
+    public Post(int userId, String title, String body) {
+        this.userId = userId;
+        this.title = title;
+        this.body = body;
+    }
+
     @SerializedName("userId")
     private int userId;
 

@@ -98,7 +98,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK) {
-            Post post = (Post) getIntent().getSerializableExtra("Post");
+            Post post = (Post) data.getExtras().getSerializable("Post");
             if (post != null) {
                 addPost(post);
             }

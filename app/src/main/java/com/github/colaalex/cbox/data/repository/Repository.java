@@ -2,6 +2,7 @@ package com.github.colaalex.cbox.data.repository;
 
 import com.github.colaalex.cbox.data.api.ApiCallback;
 import com.github.colaalex.cbox.data.api.PostApi;
+import com.github.colaalex.cbox.domain.entity.Post;
 import com.github.colaalex.cbox.domain.repository.IPostRepository;
 
 import javax.inject.Inject;
@@ -36,8 +37,8 @@ public class Repository implements IPostRepository {
     }
 
     @Override
-    public void sendPost(String title, String text, ApiCallback callback) {
-        postApi.sendPost(title, text, 1)
+    public void sendPost(Post post, ApiCallback callback) {
+        postApi.sendPost(post)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callback::onSuccess, callback::onError);

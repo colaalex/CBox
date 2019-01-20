@@ -22,7 +22,7 @@ public class CreatePresenter extends MvpPresenter<CreateView> {
 
     void sendPost(String title, String text) {
         Log.d("Create Presenter", text);
-        intercator.sendPost(title, text, new ApiCallback() {
+        intercator.sendPost(new Post(1, title, text), new ApiCallback() {
             @Override
             public void onSuccess(Object result) {
                 Log.d("Create presenter", "Add successful");

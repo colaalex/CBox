@@ -6,8 +6,7 @@ import com.github.colaalex.cbox.domain.entity.Post;
 import java.util.List;
 
 import io.reactivex.Single;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -24,8 +23,7 @@ public interface PostApi {
     @GET("/comments")
     Single<List<Comment>> getComments(@Query("postId") int postId);
 
-    @FormUrlEncoded
     @POST("/posts")
-    Single<Post> sendPost(@Field("title") String title, @Field("body") String body, @Field("userId") int userId);
+    Single<Post> sendPost(@Body Post post);
 
 }
