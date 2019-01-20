@@ -10,8 +10,8 @@ import android.widget.EditText;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.github.colaalex.cbox.App;
 import com.github.colaalex.cbox.R;
+import com.github.colaalex.cbox.di.App;
 import com.github.colaalex.cbox.domain.entity.Post;
 
 import javax.inject.Inject;
@@ -27,6 +27,7 @@ public class CreateActivity extends MvpAppCompatActivity implements CreateView {
 
     @Inject
     Provider<CreatePresenter> presenterProvider;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.etPost)
@@ -45,6 +46,7 @@ public class CreateActivity extends MvpAppCompatActivity implements CreateView {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() == null) throw new AssertionError();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

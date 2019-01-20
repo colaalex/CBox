@@ -3,12 +3,14 @@ package com.github.colaalex.cbox.domain.repository;
 import com.github.colaalex.cbox.data.api.ApiCallback;
 import com.github.colaalex.cbox.domain.entity.Post;
 
+import io.reactivex.disposables.Disposable;
+
 public interface IPostRepository {
 
-    void getPost(ApiCallback callback);
+    Disposable getPost(ApiCallback callback);
 
-    void getComments(int postId, ApiCallback callback);
+    Disposable getComments(int postId, ApiCallback callback);
 
-    void sendPost(Post post, ApiCallback callback);
+    Disposable sendPost(Post post, ApiCallback callback);
 
 }

@@ -5,6 +5,8 @@ import com.github.colaalex.cbox.domain.repository.IPostRepository;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 public class CommentInteractor {
 
     private IPostRepository postRepository;
@@ -14,7 +16,7 @@ public class CommentInteractor {
         this.postRepository = postRepository;
     }
 
-    public void getComments(int postId, ApiCallback callback) {
-        postRepository.getComments(postId, callback);
+    public Disposable getComments(int postId, ApiCallback callback) {
+        return postRepository.getComments(postId, callback);
     }
 }

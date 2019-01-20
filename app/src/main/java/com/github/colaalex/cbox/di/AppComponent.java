@@ -1,8 +1,8 @@
-package com.github.colaalex.cbox;
+package com.github.colaalex.cbox.di;
 
 import android.content.Context;
 
-import com.github.colaalex.cbox.modules.NetworkModule;
+import com.github.colaalex.cbox.di.modules.NetworkModule;
 import com.github.colaalex.cbox.presentation.create.CreateActivity;
 import com.github.colaalex.cbox.presentation.main.MainActivity;
 import com.github.colaalex.cbox.presentation.post.PostActivity;

@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/input_title"
                 android:inputType="textAutoComplete"
-                android:textColor="@color/colorText"/>
+                android:importantForAutofill="no"
+                android:textColor="@color/colorText" />
 
             <EditText
                 android:id="@+id/etPost"

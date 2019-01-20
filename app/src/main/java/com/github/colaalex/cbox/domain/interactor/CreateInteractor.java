@@ -6,6 +6,8 @@ import com.github.colaalex.cbox.domain.repository.IPostRepository;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 public class CreateInteractor {
 
     private IPostRepository postRepository;
@@ -15,7 +17,7 @@ public class CreateInteractor {
         this.postRepository = postRepository;
     }
 
-    public void sendPost(Post post, ApiCallback callback) {
-        postRepository.sendPost(post, callback);
+    public Disposable sendPost(Post post, ApiCallback callback) {
+        return postRepository.sendPost(post, callback);
     }
 }

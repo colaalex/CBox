@@ -1,4 +1,4 @@
-package com.github.colaalex.cbox;
+package com.github.colaalex.cbox.di;
 
 import android.app.Application;
 

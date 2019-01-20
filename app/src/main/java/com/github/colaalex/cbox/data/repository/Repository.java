@@ -8,6 +8,7 @@ import com.github.colaalex.cbox.domain.repository.IPostRepository;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -21,24 +22,24 @@ public class Repository implements IPostRepository {
     }
 
     @Override
-    public void getPost(ApiCallback callback) {
-        postApi.getPosts()
+    public Disposable getPost(ApiCallback callback) {
+        return postApi.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callback::onSuccess, callback::onError);
     }
 
     @Override
-    public void getComments(int postId, ApiCallback callback) {
-        postApi.getComments(postId)
+    public Disposable getComments(int postId, ApiCallback callback) {
+        return postApi.getComments(postId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callback::onSuccess, callback::onError);
     }
 
     @Override
-    public void sendPost(Post post, ApiCallback callback) {
-        postApi.sendPost(post)
+    public Disposable sendPost(Post post, ApiCallback callback) {
+        return postApi.sendPost(post)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(callback::onSuccess, callback::onError);

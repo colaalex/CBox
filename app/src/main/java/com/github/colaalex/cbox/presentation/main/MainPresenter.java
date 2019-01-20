@@ -10,19 +10,24 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 @InjectViewState
 public class MainPresenter extends MvpPresenter<MainView> {
 
     private PostInteractor interactor;
 
+    private CompositeDisposable compositeDisposable;
+
     @Inject
     MainPresenter(PostInteractor postInteractor) {
         this.interactor = postInteractor;
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     void loadPosts() {
         getViewState().showProgressBar(true);
-        interactor.getPosts(new ApiCallback() {
+        compositeDisposable.add(interactor.getPosts(new ApiCallback() {
             @Override
             public void onSuccess(Object result) {
                 if (result instanceof List) {
@@ -36,11 +41,17 @@ public class MainPresenter extends MvpPresenter<MainView> {
                 getViewState().showMessage("Error loading posts");
                 getViewState().showProgressBar(false);
             }
-        });
+        }));
     }
 
     void createPost() {
         getViewState().createPost();
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
     }
 
     void showPost(Post post) {

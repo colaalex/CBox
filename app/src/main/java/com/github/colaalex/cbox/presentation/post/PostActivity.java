@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.github.colaalex.cbox.App;
 import com.github.colaalex.cbox.R;
+import com.github.colaalex.cbox.di.App;
 import com.github.colaalex.cbox.domain.entity.Comment;
 import com.github.colaalex.cbox.domain.entity.Post;
 
@@ -55,6 +55,7 @@ public class PostActivity extends MvpAppCompatActivity implements PostView {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() == null) throw new AssertionError();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

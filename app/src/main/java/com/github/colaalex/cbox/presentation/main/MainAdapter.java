@@ -42,7 +42,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_post, viewGroup, false);
             return new ItemViewHolder(view, mListener);
         }
-        return null;
+        throw new RuntimeException("No suitable view holder");
     }
 
     @Override
@@ -78,10 +78,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     void addPosts(List<Post> posts) {
         data.addAll(posts);
         notifyDataSetChanged();
-    }
-
-    int getPostId(int pos) {
-        return data.get(pos).getPostId();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

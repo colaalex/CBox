@@ -5,6 +5,8 @@ import com.github.colaalex.cbox.domain.repository.IPostRepository;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 public class PostInteractor {
 
     private IPostRepository postRepository;
@@ -14,7 +16,7 @@ public class PostInteractor {
         this.postRepository = postRepository;
     }
 
-    public void getPosts(ApiCallback callback) {
-        postRepository.getPost(callback);
+    public Disposable getPosts(ApiCallback callback) {
+        return postRepository.getPost(callback);
     }
 }

@@ -1,4 +1,4 @@
-package com.github.colaalex.cbox.modules;
+package com.github.colaalex.cbox.di.modules;
 
 import com.github.colaalex.cbox.data.api.PostApi;
 import com.github.colaalex.cbox.data.repository.Repository;
@@ -16,7 +16,7 @@ public class NetworkModule {
     private static final String URL = "https://jsonplaceholder.typicode.com/";
 
     @Provides
-    public Retrofit retrofit() {
+    Retrofit retrofit() {
         return new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())

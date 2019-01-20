@@ -12,8 +12,8 @@ import android.widget.ProgressBar;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.github.colaalex.cbox.App;
 import com.github.colaalex.cbox.R;
+import com.github.colaalex.cbox.di.App;
 import com.github.colaalex.cbox.domain.entity.Post;
 import com.github.colaalex.cbox.presentation.RecyclerViewClickListener;
 import com.github.colaalex.cbox.presentation.create.CreateActivity;
@@ -98,9 +98,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK) {
-            Post post = (Post) data.getExtras().getSerializable("Post");
-            if (post != null) {
-                addPost(post);
+            if (data != null) {
+                assert data.getExtras() != null;
+                Post post = (Post) data.getExtras().getSerializable("Post");
+                if (post != null) {
+                    addPost(post);
+                }
             }
             showMessage("New post created");
         } else if (resultCode == 2)

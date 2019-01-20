@@ -36,7 +36,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_comment, viewGroup, false);
             return new ViewHolder(view);
         }
-        return null;
+        throw new RuntimeException("No suitable view holder");
     }
 
     @Override
